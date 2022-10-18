@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+
+@author: Sonith Riem 
+This is a roulette program that simulates a popular casino betting game. 
+It involves a wheel with 38 slots: 0,00, and number from 1-36. 
+If player land on 0,00, the player usually lose, with the exception of a straigh bet. 
+
+"""
+import random
+
+#Straight bet allows player to bet on a specific number on the wheel.  
+#Can land on 0 & 00, payout = 35
+def win_straight_bet(bet_value, roll):
+    if bet_value == roll:
+        return True 
+    else:
+        return False
+
+#Even/odd bet allows player to bet on either an even or odd number on the wheel. 
+#Cannot land on 0 & 00, payout = 2
+def win_even_odd_bet(bet_value, roll):
+    if (bet_value == 0) and (roll % 2 == 0) and (roll != 37) and (roll != 0):
+        return True 
+    elif (bet_value == 1) and (roll % 2 != 0) and (roll != 37) and (roll != 0):
+        return True
+    else:
+        return False
+
+#Dozen bet allows player to bet on the first(1-12), second(13-24), or third(25-36) dozen on the wheel. 
+#Cannot land on 0 & 00, payout = 3
+def win_dozen_bet(bet_value, roll):
+    if (bet_value == 1) and (1 <= roll <= 12) and (roll != 37) and (roll != 0):
+        return True 
+    elif (bet_value == 2) and (13 <= roll <= 24) and (roll != 37) and (roll != 0):
+        return True
+    elif (bet_value == 3) and (25 <= roll <= 36) and (roll != 37) and (roll != 0):
+        return True    
+    else:
+        return False
+    
+#Column bet allows player to bet on the first(%3 = 1), second(%3 = 2), or third (%3 = 0)colomn of the wheel.  
+#Cannot land on 0 & 00, payout = 3
+def win_column_bet(bet_value, roll):
+    if (bet_value == 1) and (roll % 3 == 1) and (roll != 37) and (roll != 0):
+        return True 
+    elif (bet_value == 2) and (roll % 3 == 2) and (roll != 37) and (roll != 0):
+        return True
+    elif (bet_value == 3) and (roll % 3 == 0) and (roll != 37) and (roll != 0):
+        return True    
+    else:
+        return False
+
+
+
+#Part 2: Play the game.
+
+if __name__ == "__main__":
+    money = int(input('Enter the amount of money you want to bet: '))
+
+    bet_choice = int(input('Choose your type of bet:\n'+
+                       '1: Straight bet\n'+
+                       '2: Even/odd bet\n'+
+                       '3: Dozen bet\n'+
+                       '4: Column bet\n'))
+
+    bet_value = int(input('Enter number to bet on, and use 37 for double-zero \n'+
+                       'Enter 0 for even or 1 for odd \n'+
+                       'Enter 1 for first dozen, 2 for second, or 3 for third \n'+
+                       'Enter column number: 1, 2, or 3 \n'))
+    roll = random.randint(0,37)
+    
+    if bet_choice == 1:
+        print("You rolled:", roll)
+        if win_straight_bet(bet_value, roll) == True:
+            payout = money * 35
+            print("You win $" + str(payout) + ".")
+        else:
+            print("You lost $" + str(money) + ".")
+    
+    if bet_choice == 2:
+        print("You rolled:", roll)
+        if win_even_odd_bet(bet_value, roll) == True:
+            payout = money * 2
+            print("You win $" + str(payout) + ".")
+        else:
+            print("You lost $" + str(money) + ".")
+            
+    if bet_choice == 3:
+        print("You rolled:", roll)
+        if win_dozen_bet(bet_value, roll) == True:
+            payout = money * 3
+            print("You win $" + str(payout) + ".")
+        else:
+            print("You lost $" + str(money) + ".")
+            
+    if bet_choice == 4:
+        print("You rolled:", roll)
+        if win_column_bet(bet_value, roll) == True:
+            payout = money * 3
+            print("You win $" + str(payout) + ".")
+        else:
+            print("You lost $" + str(money) + ".")
+    
+    # Complete Steps 1-3
+
